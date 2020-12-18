@@ -18,9 +18,10 @@
     <canvas id="canvas" width="480" height="320" />
 
     <script>
-      const canvas = document.getElementById('canvas');
+        
+        const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
-
+    
       let x = canvas.width / 2;
       let y = canvas.height - 30;
       let dx = 2;
@@ -41,7 +42,13 @@
       let brickPadding = 10;
       let brickOffsetTop = 30;
       let brickOffsetLeft = 30;
-
+      let score = 0;
+      
+      function drawScore(){
+          ctx.font = "16px Arial";
+          ctx.fillStyle = "#d0d0a0";
+          ctx.fillText(`Score: ${score}`,8,20);
+      }
       let bricks = [];
       initBricks();
       function initBricks() {
@@ -64,6 +71,11 @@
               if (b.status === 1) {
                 dy = -dy;
                 b.status = 0;
+                score++;
+                if(score=== brickColumCount*brickRowCount){
+                    alert('YOU WIN');
+                    clearInterval(interval);
+                }
               }
             }
           });
@@ -145,6 +157,7 @@
         drawPaddle();
         drawBricks();
         detectCollision();
+        drawScore();
         if (isLeftPressed) {
           paddleX -= 7;
           if (paddleX < 0) {

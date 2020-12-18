@@ -23,8 +23,8 @@
 
       let x = canvas.width / 2;
       let y = canvas.height - 30;
-      let dx = 2;
-      let dy = -2;
+      let dx = 4;
+      let dy = -4;
       let ballRadius = 20;
 
       let paddleWidth = 70;
@@ -42,7 +42,13 @@
       let brickOffsetTop = 30;
       let brickOffsetLeft = 30;
       let score = 0;
-
+      let lives = 2;
+      
+      function drawLives(){
+          ctx.font = '16px Arial';
+          ctx.fillStyle = '#FF0000';
+          ctx.fillText(`Lives: ${lives}`,canvas.width/2,20);
+      }
       function drawScore() {
         ctx.font = '16px Arial';
         ctx.fillStyle = '#d0d0a0';
@@ -73,7 +79,6 @@
                 score++;
                 if (score === brickColumCount * brickRowCount) {
                   alert('YOU WIN');
-                  clearInterval(interval);
                 }
               }
             }
@@ -98,8 +103,6 @@
           }
         }
       }
-
-      const interval = setInterval(draw, 10);
 
       document.addEventListener('mousemove', (e) => {
         const relativeX = e.clientX - canvas.offsetLeft;
@@ -143,8 +146,17 @@
           if (x > paddleX && x < paddleX + paddleWidth) {
             dy = -dy;
           } else {
-            clearInterval(interval);
-            alert('GAME OVER');
+            if (lives > 0) {
+              lives--;
+              x = canvas.width / 2;
+              y = canvas.height - 30;
+              dx = 3;
+              dy = -3;
+              paddleX = canvas.width / 2;
+            } else {
+              document.location.reload();
+              alert('GAME OVER');
+            }
           }
         }
         if (x + dx < 0 + ballRadius || x + dx > canvas.width - ballRadius) {
@@ -163,6 +175,8 @@
         drawBricks();
         detectCollision();
         drawScore();
+        drawLives();
+        
         if (isLeftPressed) {
           paddleX -= 7;
           if (paddleX < 0) {
@@ -177,7 +191,9 @@
         }
         x += dx;
         y += dy;
+        requestAnimationFrame(draw);
       }
+      draw();
     </script>
   </body>
 </html>

@@ -25,7 +25,7 @@
       let y = canvas.height - 30;
       let dx = 2;
       let dy = -2;
-      let ballRadius = 30;
+      let ballRadius = 20;
 
       let paddleWidth = 70;
       let paddleHeight = 20;
@@ -43,20 +43,47 @@
       let brickOffsetLeft = 30;
 
       let bricks = [];
-      function drawBricks() {
+      initBricks();
+      function initBricks() {
         for (let i = 0; i < brickRowCount; ++i) {
           bricks[i] = [];
           for (let j = 0; j < brickColumCount; ++j) {
-            bricks[i][j] = { x: 0, y: 0 };
-            const brickX = j * (brickWidth + brickPadding) + brickOffsetLeft;
-            const brickY = i * (brickHeight + brickPadding) + brickOffsetTop;
-            bricks[i][j].x = brickX;
-            bricks[i][j].y = brickY;
-            ctx.beginPath();
-            ctx.rect(brickX, brickY, brickWidth, brickHeight);
-            ctx.fillStyle = '#ababab';
-            ctx.fill();
-            ctx.closePath();
+            bricks[i][j] = { x: 0, y: 0, status: 1 };
+          }
+        }
+      }
+      function detectCollision() {
+        bricks.forEach((bs) => {
+          bs.forEach((b) => {
+            if (
+              x > b.x &&
+              x < b.x + brickWidth &&
+              y > b.y &&
+              y < b.y + brickHeight
+            ) {
+              if (b.status === 1) {
+                dy = -dy;
+                b.status = 0;
+              }
+            }
+          });
+        });
+      }
+      function drawBricks() {
+        for (let i = 0; i < brickRowCount; ++i) {
+          for (let j = 0; j < brickColumCount; ++j) {
+            const brick = bricks[i][j];
+            if (brick.status === 1) {
+              const brickX = j * (brickWidth + brickPadding) + brickOffsetLeft;
+              const brickY = i * (brickHeight + brickPadding) + brickOffsetTop;
+              bricks[i][j].x = brickX;
+              bricks[i][j].y = brickY;
+              ctx.beginPath();
+              ctx.rect(brickX, brickY, brickWidth, brickHeight);
+              ctx.fillStyle = '#ababab';
+              ctx.fill();
+              ctx.closePath();
+            }
           }
         }
       }
@@ -117,6 +144,7 @@
         drawBall();
         drawPaddle();
         drawBricks();
+        detectCollision();
         if (isLeftPressed) {
           paddleX -= 7;
           if (paddleX < 0) {

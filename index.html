@@ -21,11 +21,45 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
 
+      let x = canvas.width / 2;
+      let y = canvas.height - 30;
+      let dx = 2;
+      let dy = -2;
+      let ballRadius = 30;
+
       let paddleWidth = 70;
       let paddleHeight = 20;
       let paddleX = canvas.width / 2;
+
       let isLeftPressed = false;
       let isRightPressed = false;
+
+      let brickRowCount = 3;
+      let brickColumCount = 7;
+      let brickWidth = 50;
+      let brickHeight = 15;
+      let brickPadding = 10;
+      let brickOffsetTop = 30;
+      let brickOffsetLeft = 30;
+
+      let bricks = [];
+      function drawBricks() {
+        for (let i = 0; i < brickRowCount; ++i) {
+          bricks[i] = [];
+          for (let j = 0; j < brickColumCount; ++j) {
+            bricks[i][j] = { x: 0, y: 0 };
+            const brickX = j * (brickWidth + brickPadding) + brickOffsetLeft;
+            const brickY = i * (brickHeight + brickPadding) + brickOffsetTop;
+            bricks[i][j].x = brickX;
+            bricks[i][j].y = brickY;
+            ctx.beginPath();
+            ctx.rect(brickX, brickY, brickWidth, brickHeight);
+            ctx.fillStyle = '#ababab';
+            ctx.fill();
+            ctx.closePath();
+          }
+        }
+      }
 
       const interval = setInterval(draw, 10);
 
@@ -58,23 +92,16 @@
         ctx.closePath();
       }
 
-      let x = canvas.width / 2;
-      let y = canvas.height - 30;
-      let dx = 2;
-      let dy = -2;
-      let ballRadius = 30;
-
       function drawBall() {
         if (y + dy < 0 + ballRadius) {
           dy = -dy;
-        }else if(y + dy > canvas.height - ballRadius){
-            if(x>paddleX && x<paddleX+paddleWidth){
-                dy=-dy;
-            }else{
-                clearInterval(interval);
+        } else if (y + dy > canvas.height - ballRadius) {
+          if (x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+          } else {
+            clearInterval(interval);
             alert('GAME OVER');
-            }
-            
+          }
         }
         if (x + dx < 0 + ballRadius || x + dx > canvas.width - ballRadius) {
           dx = -dx;
@@ -89,6 +116,7 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawBall();
         drawPaddle();
+        drawBricks();
         if (isLeftPressed) {
           paddleX -= 7;
           if (paddleX < 0) {

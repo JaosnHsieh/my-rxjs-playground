@@ -18,10 +18,9 @@
     <canvas id="canvas" width="480" height="320" />
 
     <script>
-        
-        const canvas = document.getElementById('canvas');
+      const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
-    
+
       let x = canvas.width / 2;
       let y = canvas.height - 30;
       let dx = 2;
@@ -43,11 +42,11 @@
       let brickOffsetTop = 30;
       let brickOffsetLeft = 30;
       let score = 0;
-      
-      function drawScore(){
-          ctx.font = "16px Arial";
-          ctx.fillStyle = "#d0d0a0";
-          ctx.fillText(`Score: ${score}`,8,20);
+
+      function drawScore() {
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#d0d0a0';
+        ctx.fillText(`Score: ${score}`, 8, 20);
       }
       let bricks = [];
       initBricks();
@@ -72,9 +71,9 @@
                 dy = -dy;
                 b.status = 0;
                 score++;
-                if(score=== brickColumCount*brickRowCount){
-                    alert('YOU WIN');
-                    clearInterval(interval);
+                if (score === brickColumCount * brickRowCount) {
+                  alert('YOU WIN');
+                  clearInterval(interval);
                 }
               }
             }
@@ -102,6 +101,12 @@
 
       const interval = setInterval(draw, 10);
 
+      document.addEventListener('mousemove', (e) => {
+        const relativeX = e.clientX - canvas.offsetLeft;
+        if (relativeX > 0 && relativeX < canvas.width) {
+          paddleX = relativeX;
+        }
+      });
       document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
           isLeftPressed = true;

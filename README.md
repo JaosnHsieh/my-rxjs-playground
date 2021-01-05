@@ -1,3 +1,3 @@
-## simple js breakout game
+## learning rxjs
 
-https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript
+https://www.learnrxjs.io/learn-rxjs/recipes

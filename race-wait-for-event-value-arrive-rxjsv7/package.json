@@ -1,0 +1,19 @@
+{
+  "name": "race-wait-for-event-value-arrive-rxjsv7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@types/node": "^15.12.0",
+    "nodemon": "^2.0.7",
+    "rxjs": "^7.1.0",
+    "typescript": "^4.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "nodemon ./index.ts"
+  },
+  "keywords": [],
+  "author": "jasonh",
+  "license": "ISC"
+}

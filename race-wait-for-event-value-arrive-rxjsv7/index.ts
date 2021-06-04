@@ -1,3 +1,5 @@
+// end up not using this because rxjs v7 for now is not working on my create-react-app typescript project
+// related issue: https://github.com/angular/angular/issues/41897
 import { firstValueFrom, fromEvent, interval, Observable } from 'rxjs';
 import { raceWith, mapTo, filter } from 'rxjs/operators';
 import Events from 'events';

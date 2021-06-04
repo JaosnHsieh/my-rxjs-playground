@@ -1,13 +1,12 @@
 {
-  "name": "rxjs-race-wait-for-event-value-arrive",
+  "name": "race-wait-for-event-value-arrive-rxjsv6",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "@types/node": "^15.12.0",
     "nodemon": "^2.0.7",
-    "rxjs": "^7.1.0",
-    "tsc": "^2.0.3",
+    "rxjs": "^6.6.7",
     "typescript": "^4.3.2"
   },
   "devDependencies": {},
